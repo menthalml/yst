@@ -4,6 +4,12 @@ export default createRouter({
   history: createWebHashHistory(),
   routes: [
     {
+      path: '/',
+      redirect: () => {
+        return {path: '/home'}
+      }
+    },
+    {
       path: '/home',
       component: () => import('@/pages/home/index.vue')
     },
