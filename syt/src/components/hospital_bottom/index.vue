@@ -18,9 +18,11 @@
 .bottom {
   width: 100%;
   height: 50px;
-  background: #f0f2f5;
+  padding: 20px;
+  background: #f2f5f8;
   display: flex;
   justify-content: center;
+  margin-top: 50px;
   .content {
     width: 1200px;
     height: 100%;

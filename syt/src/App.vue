@@ -8,6 +8,15 @@
     <HospitalBottom></HospitalBottom>
   </div>
 </template>
+<script lang="ts" setup>
+import request from '@/utils/request';
+import { onMounted } from 'vue';
+onMounted(() => {
+  request.get('/hosp/hospital/1/10').then((res) => {
+    console.log('app组件展示获取的', res);
+    })
+})
+</script>
 
 <style scoped lang="scss">
 .container {

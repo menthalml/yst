@@ -1,27 +1,27 @@
 <template>
   <div>
       <!-- 轮播-->
-      <Carousel></Carousel>
+      <Carousel />
       <!-- 首页搜索 -->
       <Search></Search>
       <!-- 底部医院接口 -->
       <el-row :gutter="20">
         <el-col :span="20">
           <!-- 等级 -->
-          <Level></Level>
+          <Level />
           <!-- 地区： -->
-          <Region></Region>
+          <Region />
           <!-- 医院结构 -->
           <div class="hospital">
-            <Card class="item" v-for="i in 10" :key="i"></Card>
+            <Card class="item" v-for="(item, index) in hasHospitalArr" :key="index" :hospitalInfo="item"></Card>
           </div>
           <el-pagination
-                  v-model:current-page="pageNo"
-                  v-model:page-size="pageSize"
+                  v-model:currentPage="pageNo"
+                  v-model:pageSize="pageSize"
                   :page-sizes="[20,30,40]"
                   :background="true"
                   layout="prev, pager, next, jumper,->, sizes,total "
-                  :total="100"
+                  :total="total"
                   @size-change="handleSizeChange"
                   @current-change="handleCurrentChange"
               />
@@ -37,10 +37,35 @@ import Search from './search/index.vue';
 import Level from './level/index.vue';
 import Region from './Region/index.vue';
 import Card from './card/index.vue';
+import { reqHopital } from '@/api/home/index'
 
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 let pageNo = ref<number>(1);
 let pageSize = ref<number>(20);
+let hasHospitalArr = ref([]);
+let total = ref(0);
+
+onMounted(() => {
+  getHospitalInfo();
+})
+// 获取
+const getHospitalInfo = async () => {
+  let result: any = await reqHopital(pageNo.value, pageSize.value)
+  console.log('1111', result);
+  if (result.code === 200) {
+    // 存储医院的数据
+    hasHospitalArr.value = result.data.content;
+    // 存储医院的总个数
+    total.value = result.data.totalElements;
+  }
+}
+const handleCurrentChange = () => {
+  getHospitalInfo();
+}
+const handleSizeChange = () => {
+  pageNo.value = 1;
+  getHospitalInfo()
+}
 </script>
 
 <style scoped lang="scss">

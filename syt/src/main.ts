@@ -9,6 +9,7 @@ import router from '@/router';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import 'promise-polyfill/src/polyfill';
 // 利用createApp方法创建应用实例，且将应用实例挂在到挂载点上
 // 挂载点再静态文件中
 const app = createApp(App);
