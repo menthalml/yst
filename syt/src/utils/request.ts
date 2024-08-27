@@ -1,4 +1,3 @@
-import { interceptors } from 'node_modules/axios/index.d.cts';
 // 为什么对于axios函数库进行二次封装？二次封装的目的是什么
 /**
  * 目的：

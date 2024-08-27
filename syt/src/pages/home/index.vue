@@ -44,7 +44,6 @@ let pageNo = ref<number>(1);
 let pageSize = ref<number>(20);
 let hasHospitalArr = ref([]);
 let total = ref(0);
-
 onMounted(() => {
   getHospitalInfo();
 })
