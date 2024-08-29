@@ -37,19 +37,20 @@ import Search from './search/index.vue';
 import Level from './level/index.vue';
 import Region from './Region/index.vue';
 import Card from './card/index.vue';
+import type { Content, HospitalResponseData } from '@/api/home/type'
 import { reqHopital } from '@/api/home/index'
 
 import { ref, onMounted } from 'vue';
 let pageNo = ref<number>(1);
 let pageSize = ref<number>(20);
-let hasHospitalArr = ref([]);
-let total = ref(0);
+let hasHospitalArr = ref<Content>([]);
+let total = ref<number>(0);
 onMounted(() => {
   getHospitalInfo();
 })
 // 获取
 const getHospitalInfo = async () => {
-  let result: any = await reqHopital(pageNo.value, pageSize.value)
+  let result: HospitalResponseData = await reqHopital(pageNo.value, pageSize.value)
   console.log('1111', result);
   if (result.code === 200) {
     // 存储医院的数据
