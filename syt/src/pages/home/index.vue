@@ -8,13 +8,14 @@
       <el-row :gutter="20">
         <el-col :span="20">
           <!-- 等级 -->
-          <Level />
+          <Level @getLevel="getLevel" />
           <!-- 地区： -->
-          <Region />
+          <Region @getRegion="getRegion" />
           <!-- 医院结构 -->
-          <div class="hospital">
+          <div class="hospital" v-if="hasHospitalArr.length">
             <Card class="item" v-for="(item, index) in hasHospitalArr" :key="index" :hospitalInfo="item"></Card>
           </div>
+          <el-empty v-else description="暂无数据" />
           <el-pagination
                   v-model:currentPage="pageNo"
                   v-model:pageSize="pageSize"
@@ -45,12 +46,15 @@ let pageNo = ref<number>(1);
 let pageSize = ref<number>(20);
 let hasHospitalArr = ref<Content>([]);
 let total = ref<number>(0);
+// 等级
+let hostype = ref<string>('');
+let districtCode = ref<string>('')
 onMounted(() => {
   getHospitalInfo();
 })
 // 获取
 const getHospitalInfo = async () => {
-  let result: HospitalResponseData = await reqHopital(pageNo.value, pageSize.value)
+  let result: HospitalResponseData = await reqHopital(pageNo.value, pageSize.value, hostype.value, districtCode.value)
   console.log('1111', result);
   if (result.code === 200) {
     // 存储医院的数据
@@ -65,6 +69,15 @@ const handleCurrentChange = () => {
 const handleSizeChange = () => {
   pageNo.value = 1;
   getHospitalInfo()
+}
+// 子组件自定义时间
+const getLevel = (level: string) => {
+  hostype.value = level;
+  getHospitalInfo();
+}
+const getRegion = (region: string) => {
+  districtCode.value = region;
+  getHospitalInfo();
 }
 </script>
 

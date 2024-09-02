@@ -12,13 +12,14 @@
 
 <script lang="ts" setup>
 import { reqHospitalLevelAndRegion } from '@/api/home/index';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, defineEmits } from 'vue';
 import type { HospitalLevelAndRegionResponseData, HospitalLevelAndRegionArr } from '@/api/home/type';
 onMounted(() => {
   getRegion();
 })
 const regionArr = ref<HospitalLevelAndRegionArr>([])
 const regionFlag = ref<string>('')
+let $emit = defineEmits(['getRegion']);
 const getRegion = async () => {
   const res: HospitalLevelAndRegionResponseData = await reqHospitalLevelAndRegion('Beijin')
   console.log(res);
@@ -28,6 +29,7 @@ const getRegion = async () => {
 }
 const changeRegion = (region: string) => {
   regionFlag.value = region;
+  $emit('getRegion', region);
 }
 </script>
 
