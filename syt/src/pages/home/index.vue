@@ -27,7 +27,7 @@
                   @current-change="handleCurrentChange"
               />
         </el-col>
-        <el-col :span="4"></el-col>
+        <el-col :span="4"><Tip></Tip></el-col>
       </el-row>
     </div>
 </template>
@@ -40,6 +40,7 @@ import Region from './Region/index.vue';
 import Card from './card/index.vue';
 import type { Content, HospitalResponseData } from '@/api/home/type'
 import { reqHopital } from '@/api/home/index'
+import Tip from './tip/index.vue';
 
 import { ref, onMounted } from 'vue';
 let pageNo = ref<number>(1);
